@@ -1,11 +1,9 @@
 package com.airesearch.backend.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import com.airesearch.backend.dto.LoginRequest;
+import com.airesearch.backend.dto.LoginResponse;
 import com.airesearch.backend.dto.RegisterRequest;
 import com.airesearch.backend.model.User;
 import com.airesearch.backend.service.UserService;
@@ -28,5 +26,13 @@ public class AuthController {
     @PostMapping("/register")
     public User register(@RequestBody RegisterRequest request) {
         return userService.registerUser(request);
+    }
+
+    @PostMapping("/login")
+    public LoginResponse login(@RequestBody LoginRequest request) {
+
+        String token = userService.loginUser(request);
+
+        return new LoginResponse(token);
     }
 }
